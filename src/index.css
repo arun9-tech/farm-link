@@ -1,0 +1,37 @@
+/* === CODE TO PREVENT SCROLLING AND FIT THE SCREEN === */
+
+/* 
+  1. Set the root HTML and BODY elements to take up 100% of the screen height.
+     This creates the foundation for a full-height app.
+*/
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-y: hidden; /* This is the key: It hides the main vertical scrollbar of the browser window. */
+  background-color: #f8f9fa; /* A standard light grey Bootstrap background color. */
+}
+
+/* 
+  2. Make the main React root container also take up the full height and
+     act as a flexible column for its children (Navbar, main content).
+*/
+#root {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 
+  3. Target the <main> element within our App.jsx to make it the scrollable area.
+     This is the most important part for usability.
+*/
+main.container {
+  flex-grow: 1; /* This makes the <main> element expand to fill all available vertical space between the Navbar and the bottom of the screen. */
+  
+  overflow-y: auto; /* This says: "If the content inside me is too tall, show a scrollbar ONLY for me, not the whole page." */
+  
+  /* We add padding here to ensure content doesn't touch the edges */
+  padding-top: 1rem;
+  padding-bottom: 2rem;
+}

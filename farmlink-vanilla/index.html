@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FarmLink - Fresh From The Farm</title>
+
+    <!-- === CSS STYLES ARE NOW INSIDE THE HTML FILE === -->
+    <style>
+        /* Basic resets and global styles */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+        }
+
+        /* Header and Footer Styling */
+        .site-header, .site-footer {
+            background-color: #2E7D32; /* A nice green color */
+            color: #fff;
+            text-align: center;
+            padding: 1.5rem 0;
+        }
+
+        .site-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Main Content and Farmer Grid */
+        main h2 {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            color: #444;
+        }
+
+        .farmer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        /* Individual Farmer Card Styling */
+        .farmer-card {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.2s ease-in-out;
+        }
+        
+        .farmer-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .farmer-card h3 {
+            font-size: 1.5rem;
+            color: #2E7D32;
+            margin-bottom: 0.25rem;
+        }
+
+        .farmer-card .owner {
+            font-size: 1rem;
+            color: #666;
+            margin-bottom: 1rem;
+        }
+
+        .farmer-card .story {
+            flex-grow: 1;
+            margin-bottom: 1rem;
+        }
+
+        .farmer-card .btn {
+            display: inline-block;
+            background-color: #FF9800;
+            color: #fff;
+            padding: 0.75rem 1.5rem;
+            border-radius: 5px;
+            text-decoration: none;
+            text-align: center;
+            font-weight: bold;
+            margin-top: auto;
+            transition: background-color 0.2s;
+        }
+
+        .farmer-card .btn:hover {
+            background-color: #F57C00;
+        }
+        
+        .error-message {
+            font-size: 1.2rem;
+            text-align: center;
+            color: #D32F2F; /* Red color for errors */
+            padding: 2rem;
+            background-color: #FFEBEE;
+            border: 1px solid #D32F2F;
+            border-radius: 8px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <header class="site-header">
+        <h1>FarmLink</h1>
+        <p>Fresh produce, straight from the source.</p>
+    </header>
+
+    <main class="container">
+        <h2>Meet Your Local Farmers</h2>
+        <!-- This container is where our JavaScript will add the farmer cards -->
+        <div id="farmer-list-container" class="farmer-grid">
+            <!-- JavaScript will populate this area -->
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <p>© 2025 FarmLink. All rights reserved.</p>
+    </footer>
+
+    <!-- === JAVASCRIPT IS NOW INSIDE THE HTML FILE, AT THE END OF THE BODY === -->
+    <script>
+        // This is the most reliable way to ensure code runs after the page is ready.
+        try {
+            // --- OUR LOCAL DATABASE IS DIRECTLY INSIDE THE SCRIPT ---
+            const farmersData = [
+                {
+                    "id": 1,
+                    "farm_name": "Green Valley Farms",
+                    "owner_name": "John & Mary Green",
+                    "story": "A family-run farm for over 50 years, specializing in organic tomatoes, lettuce, and carrots. We believe in sustainable agriculture."
+                },
+                {
+                    "id": 2,
+                    "farm_name": "Sunny Orchard",
+                    "owner_name": "David Sunny",
+                    "story": "Home to the sweetest apples, peaches, and berries. We use natural methods to grow the most flavorful fruit you've ever tasted."
+                },
+                {
+                    "id": 3,
+                    "farm_name": "Oakwood Pastures",
+                    "owner_name": "Susan Oakwood",
+                    "story": "We raise happy, free-range chickens, providing the freshest eggs in the region. Our small vegetable patch offers seasonal greens."
+                },
+                {
+                    "id": 4,
+                    "farm_name": "Hilltop Harvest",
+                    "owner_name" : "The Miller Family",
+                    "story": "Known for our potatoes, onions, and garlic. We provide the essential ingredients for all your favorite home-cooked meals."
+                }
+            ];
+
+            // Get a reference to the HTML element where we will display the cards.
+            const farmerListContainer = document.getElementById('farmer-list-container');
+            
+            // Clear any content that might be there (like a "Loading..." message)
+            farmerListContainer.innerHTML = '';
+
+            // Loop through each farmer object in our data array.
+            farmersData.forEach(farmer => {
+                // Create a string of HTML for one card using template literals (the ` character).
+                const cardHTML = `
+                    <div class="farmer-card">
+                        <h3>${farmer.farm_name}</h3>
+                        <p class="owner">Run by : ${farmer.owner_name}</p>
+                        <p class="item">${item.names}</p>
+                        <a href="#" class="btn">View Products</a>
+                    </div>
+                `;
+                // Add the new card's HTML to the container.
+                farmerListContainer.innerHTML += cardHTML;
+            });
+
+        } catch (error) {
+            // If any error happens, display a clear message on the page.
+            const container = document.getElementById('farmer-list-container');
+            container.innerHTML = `<p class="error-message">A critical error occurred. Please check the developer console.</p>`;
+            // Also log the actual error to the console for debugging.
+            console.error("An error occurred in the script:", error);
+        }
+    </script>
+
+</body>
+</html>
